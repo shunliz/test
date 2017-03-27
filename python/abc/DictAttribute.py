@@ -21,6 +21,9 @@ class AttributeDict(object):
 		"""
 		return getattr(self, key)
 
+	def get(self, key):
+	    return getattr(self, key)
+
 import yaml
 y = yaml.load(open('D:\\code\\shunliz\\test\\python\\abc\\test.yaml', 'r'))
 print y
@@ -34,3 +37,6 @@ y2 = {'test1':'test1',
 myobj2 = AttributeDict(**y2)
 print myobj2.test2
 print myobj2['test2']
+myobj2.testattr = 'tesok?'
+print myobj2['testattr']
+print myobj2.get('testattr')
