@@ -1,8 +1,9 @@
 class TestObject(object):
     def __init__(self):
-        self.printf()
+        self.v = self.add()
        
-    def printf(self):
-        print 'printf'
+    def add(self):
+	    print 'return 1'
+        return 1
 
 test = TestObject()
