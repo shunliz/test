@@ -32,7 +32,9 @@ while True:
             #接收到退出事件后退出程序
             exit()
         elif event.type == KEYDOWN:
-            pygame.key
+            if event.mod & KMOD_CTRL:
+                if event.key == 99:
+                    exit()
  
     screen.blit(background, (0,0))
     #将背景图画上去
