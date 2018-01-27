@@ -6,7 +6,13 @@ from pygame.locals import *
 from sys import exit
 
 pygame.init()
-screen = pygame.display.set_mode((640, 480), 0, 32)
+try:
+    screen = pygame.display.set_mode((640, 480), 0, 32)
+except pygame.error, e:
+    print "Can't create the display :-("
+    print e
+    exit()
+#screen = pygame.display.set_mode((640, 480), 0, 32)
 
 font = pygame.font.SysFont("宋体", 40)
 #上句在Linux可行，在我的Windows 7 64bit上不行，XP不知道行不行
