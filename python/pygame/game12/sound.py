@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+http://eyehere.net/2011/python-pygame-novice-professional-4/
+"""
+
 SCREEN_SIZE = (640, 480)
  
 # 重力因子，实际上是单位 像素/平方秒
