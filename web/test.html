@@ -1,0 +1,123 @@
+<html>
+<head>
+<script type="text/javascript">
+for(var i=1;i<=3;i++){
+  setTimeout(function(){
+      console.log(i);    
+  },0);  
+};
+
+for(var i=1;i<=3;i++){
+   setTimeout((function(a){  //改成立即执行函数
+       console.log(a);    
+   })(i),0);  
+};
+
+
+
+var User = {
+  count: 3223,
+ 
+  getCount: function() {
+    return this.count;
+  }
+};
+ 
+//console.log(User.getCount());  // what?
+ 
+//var func = User.getCount;
+//console.log(func());  // what?
+
+
+Function.prototype.bind=Function.prototype.bind||function(context){
+  var self=this;
+  return function(){
+      return self.apply(context,arguments);
+  };
+}
+var func=User.getCount.bind(User);
+console.log(func());
+
+Object.prototype.clone=function(){
+        var o=this.constructor===Array?[]:{};
+        for(var e in this){
+                o[e]=typeof this[e]==="object"?this[e].clone():this[e];
+        }
+        return o;
+}
+
+function clone(Obj){  
+    var buf;  
+    if(Obj instanceof Array){  
+        buf=[];                    //创建一个空的数组
+        vari=Obj.length;  
+        while(i--){  
+            buf[i]=clone(Obj[i]);  
+        }  
+        return buf;    
+    }else if(Obj instanceof Object){  
+        buf={};                  //创建一个空对象
+        for(var k in Obj){          //为这个对象添加新的属性
+            buf[k]=clone(Obj[k]);  
+        }  
+        return buf;  
+    }else{                        //普通变量直接赋值
+        return Obj;  
+    }  
+    }
+
+//var test = "321"
+//alert(test.clone())
+//alert(clone(test))
+
+
+// 定义一个动物类
+function Animal (name) {
+  // 属性
+  this.name = name || 'Animal';
+  // 实例方法
+  this.sleep = function(){
+    console.log(this.name + '正在睡觉！');
+  }
+}
+// 原型方法
+Animal.prototype.eat = function(food) {
+  console.log(this.name + '正在吃：' + food);
+};
+
+function Cat(){ 
+}
+Cat.prototype = new Animal();
+Cat.prototype.name = 'cat';
+
+//　Test Code
+var cat = new Cat();
+console.log(cat.name);
+console.log(cat.eat('fish'));
+console.log(cat.sleep());
+console.log(cat instanceof Animal); //true 
+console.log(cat instanceof Cat); //true
+
+
+
+</script>
+
+
+<style type="text/css">
+#demo {
+  width: 300;
+  height: 20;
+  border-width: 20px;
+  border-style: solid;
+  border-color: transparent transparent red transparent;
+}
+</style>
+
+
+</head>
+
+<body>
+<div id="demo">
+</div> 
+</body>
+</html>
