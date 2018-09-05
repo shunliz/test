@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue 测试实例 - vue实现列表增加和删除</title>
+<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+<div id="app1">
+ <input v-model="newAddText" placeholder="请输入要添加的内容" />
+	<button @click='addNewList'>添加</button>
+	<ul>
+		<li is='list-item' v-for='(list,index) in lists' v-bind:key='list.id'
+			v-bind:title='list.title' v-on:remove='lists.splice(index,1)'>
+		</li>
+	</ul>
+</div>
+ 
+<script>
+	Vue.component('list-item', {
+  template: '\
+    <li>\
+      {{ title }}\
+      <button v-on:click="$emit(\'remove\')">删除</button>\
+    </li>\
+  ',
+  props: ['title']
+})
+ 
+var vm = new Vue({
+  el: '#app1',
+  data: {
+  newAddText:'',
+	  lists:[
+		  {id:1,title:'手机号码'},
+		  {id:2,title:'qq号'},
+		  {id:3,title:'姓名'},
+	  ],
+	  nextTodoId: 4
+  },
+  methods:{
+	  addNewList:function(){
+		  this.lists.push({
+			  id:this.nextTodoId++,
+			  title:this.newAddText
+		  })
+		  this.newAddText=''
+	  }
+  }	
+})
+ 
+</script>
+
+
+
+
+
+<div id="app2">
+    <button @click="toshow">点击让子组件显示</button>
+    <component v-bind:is="which_to_show"></component>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app2',
+        data: {
+            which_to_show: "first"
+        },
+        methods: {
+            toshow: function () {   //切换组件显示
+                var arr = ["first", "second", "third", ""];
+                var index = arr.indexOf(this.which_to_show);
+                if (index < 3) {
+                    this.which_to_show = arr[index + 1];
+                } else {
+                    this.which_to_show = arr[0];
+                }
+                console.log(this.$children);
+            }
+        },
+        components: {
+            first: { //第一个子组件
+                template: "<div>这里是子组件1</div>"
+            },
+            second: { //第二个子组件
+                template: "<div>这里是子组件2，这里是ajax后的内容：{{hello}}</div>",
+                data: function () {
+                    return {
+                        hello: ""
+                    }
+                },
+                activate: function (done) { //执行这个参数时，才会切换组件
+                    var self = this;
+                    $.get("/test", function (data) {    //这个ajax我手动在服务器端设置延迟为2000ms，因此需要等待2秒后才会切换
+                        self.hello = data;
+                        done(); //ajax执行成功，切换组件
+                    })
+                }
+            },
+            third: { //第三个子组件
+                template: "<div>这里是子组件3</div>"
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>
