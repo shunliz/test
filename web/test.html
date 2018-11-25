@@ -113,7 +113,22 @@ alert('haha')
     alert('down');
   }
 });
+ /*
+$(document).bind('keyup', function(event){
+    console.log(event);
+    if(event.which == 40) {
+        activePage = activePage+1;
+        var pagePos = $('.page').eq(activePage).position().top;       
+        $('html, body').stop().animate({scrollTop: pagePos},{easing: 'easeInCirc', duration: 1200});
+    } else if(event.which == 38) {
+        activePage = activePage-1;
+        var pagePos = $('.page').eq(activePage).position().top;       
+        $('html, body').stop().animate({scrollTop: pagePos},{easing: 'easeInCirc', duration: 1200});
+    }
 
+    return false;
+});
+*/
 </script>
 
 
