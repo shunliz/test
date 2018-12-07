@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-git.min.js"></script>
+    <style type="text/css">
+        table, thead, th, tr, td{
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+<table id="table" style="border:1px solid;">
+    <thead>
+    <th>th1</th>
+    <th>th2</th>
+    <th>th3</th>
+    <th>th4</th>
+    </thead>
+    <tbody>
+    <tr>
+        <td>td</td>
+        <td>td</td>
+        <td>td</td>
+        <td>td</td>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript">
+    var ths = $('#table thead th');
+    for(var i=2;i<ths.length;i++){
+        ths[i].remove();
+    }
+    ths[1].colSpan=3;
+    ths[1].innerHTML='';
+
+</script>
+</body>
+</html>
