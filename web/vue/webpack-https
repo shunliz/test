@@ -9,3 +9,37 @@ devServer: {
         ca: fs.readFileSync('C:/Users/User/AppData/Local/mkcert/rootCA.pem')
     }
 }
+
+
+
+https://blog.csdn.net/hemin1003/article/details/78062481
+
+
+    server {
+        # 监听8080端口
+        listen 8080;
+ 
+        # 服务器根目录
+        root html/data/up1;
+ 
+        location / {
+        }
+    }
+    
+    
+    server {
+        listen 82;
+        listen       443 ssl;
+ 
+        ssl on;
+        ssl_certificate  ssl/server.crt;
+        ssl_certificate_key ssl/server.key;
+ 
+        location / {
+            # 转发到 http 服务器中
+            proxy_pass http://localhost;
+        }
+    }
+    
+    
+    https://blog.csdn.net/qq_37105358/article/details/80854559
