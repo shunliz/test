@@ -1,4 +1,4 @@
-package com.zsl.test.com.zsl.test.lock;
+package com.zsl.test.Thread;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

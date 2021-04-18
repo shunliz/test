@@ -1,4 +1,4 @@
-package com.zsl.test.com.zsl.test.lock;
+package com.zsl.test.Thread;
 
 public class ReentrantTest{
     public synchronized void outer() throws InterruptedException {
