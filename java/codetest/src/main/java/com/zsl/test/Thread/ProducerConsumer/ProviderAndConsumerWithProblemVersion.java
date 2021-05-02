@@ -3,7 +3,7 @@ package com.zsl.test.Thread.ProducerConsumer;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ProviderAndConsumer {
+public class ProviderAndConsumerWithProblemVersion {
     private final int MAX_LEN = 10;
     private Queue<Integer> queue = new LinkedList<Integer>();
     class Producer extends Thread {
@@ -12,11 +12,12 @@ public class ProviderAndConsumer {
             producer();
         }
         private void producer() {
-            synchronized (queue) {
-                while(true) {
+            while(true) {
+                System.out.println("#############Producer start run "+ this.getName());
+                synchronized (queue) {
                     while (queue.size() == MAX_LEN) {
                         queue.notify();
-                        System.out.println("当前队列满");
+                        System.out.println("Current queue full:" + this.getName()+queue.size()+" priority:"+this.getPriority());
                         try {
                             queue.wait();
                         } catch (InterruptedException e) {
@@ -25,7 +26,7 @@ public class ProviderAndConsumer {
                     }
                     queue.add(1);
                     queue.notify();
-                    System.out.println("生产者生产一条任务，当前队列长度为" + queue.size());
+                    System.out.println("Producer produce a task，current task queue size:" + queue.size()+","+this.getName());
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
@@ -41,11 +42,12 @@ public class ProviderAndConsumer {
             consumer();
         }
         private void consumer() {
-            synchronized (queue) {
-                while (true) {
+            while (true) {
+                System.out.println("##############consumer start run"+this.getName()+" priority:"+this.getPriority());
+                synchronized (queue) {
                     while (queue.size() == 0) {
                         queue.notify();
-                        System.out.println("当前队列为空");
+                        System.out.println("Current queue is empty."+this.getName());
                         try {
                             queue.wait();
                         } catch (InterruptedException e) {
@@ -54,7 +56,7 @@ public class ProviderAndConsumer {
                     }
                     queue.poll();
                     queue.notify();
-                    System.out.println("消费者消费一条任务，当前队列长度为" + queue.size());
+                    System.out.println("Consumer consume a task，current queue size:" + queue.size()+":"+this.getName());
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
@@ -64,25 +66,29 @@ public class ProviderAndConsumer {
             }
         }
     }
-    public static void main(String[] args) {
-        ProviderAndConsumer pc = new ProviderAndConsumer();
+    public static void main(String[] args) throws InterruptedException {
+        ProviderAndConsumerWithProblemVersion pc = new ProviderAndConsumerWithProblemVersion();
         Producer producer = pc.new Producer();
         Consumer consumer = pc.new Consumer();
         producer.start();
         consumer.start();
 
+        Producer producerr = pc.new Producer();
+        producerr.start();
+        Producer producerrr = pc.new Producer();
+        producerrr.start();
+        /*
         Producer producer2 = pc.new Producer();
+        Consumer consumer2 = pc.new Consumer();
         producer2.start();
+        consumer2.start();
+        consumer2.sleep(10000);
 
         Producer producer3 = pc.new Producer();
-        producer3.start();
-
-/*
-        Consumer consumer2 = pc.new Consumer();
-        consumer2.start();
-
         Consumer consumer3 = pc.new Consumer();
+        producer3.start();
         consumer3.start();
-*/
+        consumer3.sleep(10000);
+        */
     }
 }
